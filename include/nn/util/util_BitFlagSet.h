@@ -65,6 +65,11 @@ struct BitFlagSet {
     int GetCount() const;
     bool Test(int) const;
 
+    inline bool IsBitSet(Tag index) const
+    {
+        return (this->_storage[static_cast<u64>(index) / StorageBitCount] & (static_cast<StorageT>(1) << static_cast<u64>(index) % StorageBitCount)) != 0;
+    }
+
 private:
     BitFlagSet& SetImpl(int, StorageT, bool);
     bool TestImpl(int, StorageT) const;
@@ -75,4 +80,4 @@ private:
     static StorageT MakeStorageMask(int);
 };
 
-}  // namespace nn::util
+} // namespace nn::util

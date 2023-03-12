@@ -534,4 +534,4 @@ extern CommandBufferSetStencilCullCriteriaFunc pfncpp_nvnCommandBufferSetStencil
 
 void nvnLoadCPPProcs(Device*, DeviceGetProcAddressFunc);
 
-}  // namespace nvn
+} // namespace nvn
