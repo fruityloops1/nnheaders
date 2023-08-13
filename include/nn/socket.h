@@ -25,6 +25,7 @@ namespace socket {
     Result Initialize(void* pool, ulong poolSize, ulong allocPoolSize, int concurLimit);
     Result Finalize();
     s32 SetSockOpt(s32 socket, s32 socketLevel, s32 option, void const*, u32 len);
+    s32 GetSockOpt(s32, s32, s32, void*, unsigned int*);
     u64 Send(s32 socket, void const* buffer, u64 bufferLength, s32 flags);
     s32 SendTo(s32 socket, const void* data, ulong dataLen, s32 flags, const sockaddr* address,
         u32 addressLen);
@@ -40,6 +41,15 @@ namespace socket {
     u32 Accept(s32 socket, sockaddr* addrOut, u32* addrLenOut);
     u32 GetLastErrno();
     u32 Close(s32);
+    s32 Shutdown(s32, s32);
+    s32 Poll(pollfd*, u64, s32);
 
 } // namespace socket
 } // namespace nn
+
+extern "C" {
+uint16_t nnsocketInetHtons(uint16_t x);
+uint32_t nnsocketInetHtonl(uint32_t x);
+uint16_t nnsocketInetNtohs(uint16_t x);
+uint32_t nnsocketInetNtohl(uint32_t x);
+}
