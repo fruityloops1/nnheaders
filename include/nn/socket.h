@@ -5,6 +5,8 @@
 
 #pragma once
 
+#ifdef __cplusplus
+
 #include <nn/types.h>
 #include <nn/util.h>
 #include <sys/socket.h>
@@ -48,8 +50,15 @@ namespace socket {
 } // namespace nn
 
 extern "C" {
+#endif
+
+#include <stdint.h>
+
 uint16_t nnsocketInetHtons(uint16_t x);
 uint32_t nnsocketInetHtonl(uint32_t x);
 uint16_t nnsocketInetNtohs(uint16_t x);
 uint32_t nnsocketInetNtohl(uint32_t x);
+
+#ifdef __cplusplus
 }
+#endif
