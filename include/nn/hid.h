@@ -329,9 +329,44 @@ namespace hid {
     struct NpadJoyLeftState : NpadBaseState { };
     struct NpadJoyRightState : NpadBaseState { };
 
+    struct VibrationDeviceHandle {
+        u32 _0;
+    };
+
+    struct VibrationFileInfo {
+        u8 _0[6];
+        u16 sampleRate;
+        u32 _8;
+        u32 numSamples;
+        u8 _10[16];
+    };
+
+    struct VibrationFileParserContext {
+        u8 _0[128];
+    };
+
+    enum VibrationDevicePosition {
+        VibrationDevicePosition_None,
+        VibrationDevicePosition_Left,
+        VibrationDevicePosition_Right
+    };
+
+    struct VibrationDeviceInfo {
+        bool valid;
+        VibrationDevicePosition position;
+    };
+
+    struct VibrationValue {
+        float amp_low;
+        float freq_low;
+        float amp_high;
+        float freq_high;
+    };
+
     void InitializeMouse();
     void InitializeKeyboard();
     void InitializeNpad();
+    void InitializeVibrationDevice(const VibrationDeviceHandle&);
     void SetSupportedNpadIdType(const u32*, u64);
     void SetSupportedNpadStyleSet(NpadStyleSet);
     NpadStyleSet GetNpadStyleSet(const u32& port);
@@ -353,6 +388,13 @@ namespace hid {
     void GetNpadStates(NpadFullKeyState*, int, const u32&);
     void GetNpadStates(NpadJoyLeftState*, int, const u32&);
     void GetNpadStates(NpadJoyRightState*, int, const u32&);
+
+    int GetVibrationDeviceHandles(VibrationDeviceHandle*, int, const u32&, NpadStyleSet);
+    void GetVibrationDeviceInfo(VibrationDeviceInfo*, const VibrationDeviceHandle& handle);
+    void SendVibrationValue(const VibrationDeviceHandle& handle, const VibrationValue& value);
+    Result ParseVibrationFile(VibrationFileInfo* outInfo, VibrationFileParserContext* outContext, const void* file, size_t size);
+    void RetrieveVibrationValue(VibrationValue* out, int pos, VibrationFileParserContext* context);
+    void GetActualVibrationValue(VibrationValue* out, const VibrationDeviceHandle& handle);
 
 } // namespace hid
 } // namespace nn
