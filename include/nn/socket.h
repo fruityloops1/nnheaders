@@ -63,20 +63,20 @@ uint32_t nnsocketInetHtonl(uint32_t x);
 uint16_t nnsocketInetNtohs(uint16_t x);
 uint32_t nnsocketInetNtohl(uint32_t x);
 uint32_t nnsocketGetLastErrno();
-int32_t nnsocketGetSockName(int, sockaddr*, uint32_t*);
-int32_t nnsocketSendTo(int32_t socket, const void* data, uint64_t dataLen, int32_t flags, const sockaddr* address,
+int32_t nnsocketGetSockName(int, struct sockaddr*, uint32_t*);
+int32_t nnsocketSendTo(int32_t socket, const void* data, uint64_t dataLen, int32_t flags, const struct sockaddr* address,
     uint32_t addressLen);
 uint64_t nnsocketSend(int32_t socket, void const* buffer, uint64_t bufferLength, int32_t flags);
 int32_t nnsocketSocket(int32_t domain, int32_t type, int32_t proto);
 int32_t nnsocketSetSockOpt(int32_t socket, int32_t socketLevel, int32_t option, void const*, uint32_t len);
-uint32_t nnsocketBind(int32_t socket, const sockaddr* addr, uint32_t addrLen);
+uint32_t nnsocketBind(int32_t socket, const struct sockaddr* addr, uint32_t addrLen);
 uint32_t nnsocketListen(int32_t socket, int32_t backlog);
-uint32_t nnsocketRecvFrom(int32_t socket, void* buffer, uint64_t bufferLength, int32_t flags, sockaddr* srcAddress,
+uint32_t nnsocketRecvFrom(int32_t socket, void* buffer, uint64_t bufferLength, int32_t flags, struct sockaddr* srcAddress,
     uint32_t* addressLen);
 uint32_t nnsocketRecv(int32_t socket, void* buffer, uint64_t bufferLength, int32_t flags);
-int32_t nnsocketGetPeerName(int, sockaddr*, uint32_t*);
-uint32_t nnsocketConnect(int32_t socket, const sockaddr* addr, uint32_t addrLen);
-uint32_t nnsocketAccept(int32_t socket, sockaddr* addrOut, uint32_t* addrLenOut);
+int32_t nnsocketGetPeerName(int, struct sockaddr*, uint32_t*);
+uint32_t nnsocketConnect(int32_t socket, const struct sockaddr* addr, uint32_t addrLen);
+uint32_t nnsocketAccept(int32_t socket, struct sockaddr* addrOut, uint32_t* addrLenOut);
 
 #ifdef __cplusplus
 }

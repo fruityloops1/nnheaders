@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdlib>
 #include <nn/types.h>
 
 namespace nn::swkbd {
@@ -119,27 +120,30 @@ struct KeyboardConfig {
     bool _isUseTextCheck;
     void* _textCheckCallback;
     int separateTextPos[0x8];
+    u8 _410[208];
 };
 
 struct ShowKeyboardArg {
     KeyboardConfig keyboardConfig;
-    const char* workBuf;
+    u8* workBuf;
     long workBufSize;
-    const char* textCheckWorkBuf;
+    u8* textCheckWorkBuf;
     long textCheckWorkBufSize;
-    const char* _customizeDicBuf;
-    long _customizeDicBufSize;
 };
 
-struct String {
-    char* strBuf;
-    int bufsize;
+class String {
+public:
+    char16_t* strBuf;
+    int bufSize;
 };
 
 struct UserWord;  // TODO contents missing
 
+using TextCheckCallback = TextCheckResult (*)(void*, unsigned long*, String*);
+
 ulong GetRequiredWorkBufferSize(bool);
 ulong GetRequiredStringBufferSize();
+ulong GetRequiredTextCheckWorkBufferSize();
 void MakePreset(KeyboardConfig*, Preset);
 void SetHeaderText(KeyboardConfig*, const char16_t*);
 void SetSubText(KeyboardConfig*, const char16_t*);
@@ -158,6 +162,7 @@ void SetGuideTextUtf8(KeyboardConfig*, const char*);
 void SetInitialText(ShowKeyboardArg*, const char16_t*);
 void SetInitialTextUtf8(ShowKeyboardArg*, const char*);
 void SetUserWordList(ShowKeyboardArg*, const UserWord*, int);
-void ShowKeyboard(String*, const ShowKeyboardArg&);
+int ShowKeyboard(String*, const ShowKeyboardArg&);
+void SetTextCheckCallback(ShowKeyboardArg* arg, TextCheckCallback callback);
 
 }  // namespace nn::swkbd
